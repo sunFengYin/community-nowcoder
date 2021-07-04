@@ -9,7 +9,7 @@ import java.util.List;
 public interface DiscussPostService extends IService<DiscussPost> {
 
 
-    List<DiscussPost> selectDiscussPosts(int userId, int offset, int limit);
+    List<DiscussPost> selectDiscussPosts(int userId, int offset, int limit,int orderMode);
 
     int selectDiscussPostRows(@Param("userId") int userId);
 

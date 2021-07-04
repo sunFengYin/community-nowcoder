@@ -80,10 +80,9 @@ public class RedisKeyUtil {
     }
 
     // 帖子分数
-    public static String getPostScoreKey() {
+    public static String getPostScoreKey(){
         return PREFIX_POST + SPLIT + "score";
     }
-
     public static String getCodeKey(String owner) {
         return PREFIX_CODE + SPLIT + owner;
     }

@@ -27,7 +27,7 @@ class CommunityApplicationTests {
 
     @Test
     void contextLoads() {
-        List<DiscussPost> list = discussPostMapper.selectDiscussPosts(0, 0, 1);
+        List<DiscussPost> list = discussPostMapper.selectDiscussPosts(0, 0, 1,0);
         System.out.println(list);
         System.out.println(discussPostMapper.selectDiscussPostRows(0));
 

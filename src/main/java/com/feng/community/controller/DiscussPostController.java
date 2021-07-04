@@ -61,9 +61,6 @@ public class DiscussPostController implements CommunityConstant {
                 .commentCount(0)
                 .score(0.0)
                 .build();
-        // 计算帖子分数。Set不允许重复数据
-        String redisKey = RedisKeyUtil.getPostScoreKey();
-        redisTemplate.opsForSet().add(redisKey, post.getId());
         discussPostService.addDiscussPost(post);
 
         // 触发发帖事件
@@ -73,7 +70,9 @@ public class DiscussPostController implements CommunityConstant {
                 .setEntityType(ENTITY_TYPE_POST)
                 .setEntityId(post.getId());
         eventProducer.fireEvent(event);
-
+        // 计算帖子分数。Set不允许重复数据
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, post.getId());
 
         return CommunityUtil.getJSONString(0,"发布成功哦！");
     }

@@ -8,7 +8,9 @@ import com.feng.community.service.CommentService;
 import com.feng.community.service.DiscussPostService;
 import com.feng.community.util.CommunityConstant;
 import com.feng.community.util.HostHolder;
+import com.feng.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +35,8 @@ public class CommentController implements CommunityConstant {
     @Autowired
     private DiscussPostService discussPostService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @PostMapping("/add/{discussPostId}")
     public String addComment(@PathVariable("discussPostId") int discussPostId,
@@ -40,7 +44,8 @@ public class CommentController implements CommunityConstant {
         comment.setUserId(hostHolder.getUser().getId());
         comment.setStatus(0);
         comment.setCreateTime(new Date());
-        commentService.addComment(comment);
+        comment.setTargetId(0);
+
         //触发评论事件
         Event event = new Event()
                 .setTopic(TOPIC_COMMENT)
@@ -54,8 +59,10 @@ public class CommentController implements CommunityConstant {
         } else if (comment.getEntityType() == ENTITY_TYPE_COMMENT) {
             Comment target = commentService.findCommentById(comment.getEntityId());
             event.setEntityUserId(target.getUserId());
+            comment.setTargetId(target.getUserId());
         }
         eventProducer.fireEvent(event);
+        commentService.addComment(comment);
         if (comment.getEntityType() == ENTITY_TYPE_POST){
             // 触发发帖事件
              event = new Event()
@@ -65,6 +72,9 @@ public class CommentController implements CommunityConstant {
                     .setEntityId(discussPostId);
             eventProducer.fireEvent(event);
         }
+        // 计算评论分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, discussPostId);
 
             return "redirect:/discuss/detail/" + discussPostId;
     }

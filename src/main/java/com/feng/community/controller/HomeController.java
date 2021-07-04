@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,11 +31,12 @@ public class HomeController implements CommunityConstant {
     private LikeService likeService;
 
     @GetMapping("/index")
-    public String getIndex(Model model, Page page) {
+    public String getIndex(Model model, Page page,
+                           @RequestParam(name = "orderMode",defaultValue = "0") int orderMode) {
 
         page.setRows(discussPostService.selectDiscussPostRows(0));
-        page.setPath("/index");
-        List<DiscussPost> lists = discussPostService.selectDiscussPosts(0, page.getOffset(), page.getLimit());
+        page.setPath("/index?orderMode="+orderMode);
+        List<DiscussPost> lists = discussPostService.selectDiscussPosts(0, page.getOffset(), page.getLimit(),orderMode);
         ArrayList<Map<String, Object>> discussPosts = new ArrayList<>();
         if (!lists.isEmpty()) {
             for (DiscussPost post : lists) {
@@ -48,6 +50,7 @@ public class HomeController implements CommunityConstant {
             }
         }
         model.addAttribute("discussPosts", discussPosts);
+        model.addAttribute("orderMode",orderMode);
         return "/index";
     }
 
