@@ -19,7 +19,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+//@Controller
 @Slf4j
 public class ShareController implements CommunityConstant {
 

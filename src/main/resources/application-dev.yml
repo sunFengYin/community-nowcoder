@@ -91,3 +91,11 @@ community:
     upload: /Users/sun/Documents/resources
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,beans
+
+
+

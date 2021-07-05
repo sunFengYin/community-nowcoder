@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.PostConstruct;
 import java.io.File;
 
-@Configuration
+//@Configuration
 @Slf4j
 public class WKConfig {
 

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.community.entity.Comment;
 import com.feng.community.mapper.CommentMapper;
 import com.feng.community.service.CommentService;
-import com.feng.community.service.DiscussPostService;
 import com.feng.community.util.CommunityConstant;
 import com.feng.community.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;

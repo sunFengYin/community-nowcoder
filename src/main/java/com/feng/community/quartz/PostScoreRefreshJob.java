@@ -1,9 +1,9 @@
 package com.feng.community.quartz;
 
 import com.feng.community.entity.DiscussPost;
-import com.feng.community.service.DiscussPostService;
 import com.feng.community.service.ElasticsearchService;
 import com.feng.community.service.LikeService;
+import com.feng.community.service.impl.DiscussPostService;
 import com.feng.community.util.CommunityConstant;
 import com.feng.community.util.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;

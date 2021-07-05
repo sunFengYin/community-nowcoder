@@ -5,7 +5,7 @@ import com.feng.community.entity.DiscussPost;
 import com.feng.community.entity.Event;
 import com.feng.community.event.EventProducer;
 import com.feng.community.service.CommentService;
-import com.feng.community.service.DiscussPostService;
+import com.feng.community.service.impl.DiscussPostService;
 import com.feng.community.util.CommunityConstant;
 import com.feng.community.util.HostHolder;
 import com.feng.community.util.RedisKeyUtil;
